@@ -94,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import { GridLayout, Card, CardHeader, CardBody, CardTitle } from "@progress/kendo-vue-layout";
 import { TextBox } from "@progress/kendo-vue-inputs";
 import { ComboBox, MultiSelect } from '@progress/kendo-vue-dropdowns';
@@ -105,12 +105,12 @@ const pdvCommunes: string[] = [" ANDELYS", " BOURG EN BRESSE", " Challans", " LE
 const db = ref();
 const clientDenom = ref();
 const pdvCommune = ref();
-function submit(e) {
+function submit(e: any) {
     console.log(e, arguments)
 }
-function validOnEnter(e) {
+function validOnEnter(e: any) {
     if (e.key === "Enter") {
-        nextTick(submit)
+        nextTick(() => submit(e))
     }
 }
 </script>

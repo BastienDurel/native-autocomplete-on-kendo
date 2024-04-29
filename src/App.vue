@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Button } from "@progress/kendo-vue-buttons";
-import HelloWorld from './components/HelloWorld.vue';
 import DropDowns from './components/DropDowns.vue';
 function getCode() {
   const n = document.createElement("a");
@@ -15,7 +14,6 @@ function getCode() {
 <template>
   <Button @click="getCode">Get Code</Button>
   <div>
-    <HelloWorld v-if="false" title="empty initial value" :store="state" />
     <DropDowns />
   </div>
 </template>

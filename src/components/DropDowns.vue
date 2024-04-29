@@ -8,6 +8,7 @@
                 { row: 1, col: 1, content: 'db' },
                 { row: 2, col: 1, content: 'denom' },
                 { row: 3, col: 1, content: 'commune' },
+                { row: 4, col: 1, content: 'addr' },
             ]">
                 <template v-slot:db>
                     <ComboBox :data-items="databases" v-model="db" :placeholder="'Société'" :text-field="'text'"
@@ -22,6 +23,9 @@
                     <ComboBox :data-items="pdvCommunes" v-model="pdvCommune" :placeholder="'Commune'" :filterable="true"
                         name="pdvCommune"></ComboBox>
                 </template>
+                <template v-slot:addr>
+                    <TextBox @keyup="validOnEnter" :placeholder="'Adresse'"></TextBox>
+                </template>
             </GridLayout>
         </CardBody>
     </Card>
@@ -34,6 +38,7 @@
                 { row: 1, col: 1, content: 'db' },
                 { row: 2, col: 1, content: 'denom' },
                 { row: 3, col: 1, content: 'commune' },
+                { row: 4, col: 1, content: 'addr' },
             ]">
                 <template v-slot:db>
                     <ComboBox :data-items="databases" v-model="db" :placeholder="'Company'" :text-field="'text'"
@@ -48,14 +53,50 @@
                     <ComboBox :data-items="pdvCommunes" v-model="pdvCommune" :placeholder="'City'" :filterable="true"
                         name="pdvCommune"></ComboBox>
                 </template>
+                <template v-slot:addr>
+                    <TextBox @keyup="validOnEnter" :placeholder="'Adresse'"></TextBox>
+                </template>
             </GridLayout>
+        </CardBody>
+    </Card>
+    <Card>
+        <CardHeader>
+            <CardTitle>Dropdowns - fr - form</CardTitle>
+        </CardHeader>
+        <CardBody>
+            <form autocomplete="off">
+                <GridLayout :gap="{ rows: 3, cols: 3 }" :items="[
+                    { row: 1, col: 1, content: 'db' },
+                    { row: 2, col: 1, content: 'denom' },
+                    { row: 3, col: 1, content: 'commune' },
+                    { row: 4, col: 1, content: 'addr' },
+                ]">
+                    <template v-slot:db>
+                        <ComboBox :data-items="databases" v-model="db" :placeholder="'Société'" :text-field="'text'"
+                            :id-field="'id'" name="database"></ComboBox>
+                    </template>
+                    <template v-slot:denom>
+                        <MultiSelect :data-items="clientDenoms" :value="clientDenom" :placeholder="'Nom'"
+                            :text-field="'text'" :id-field="'id'" :filterable="true">
+                        </MultiSelect>
+                    </template>
+                    <template v-slot:commune>
+                        <ComboBox :data-items="pdvCommunes" v-model="pdvCommune" :placeholder="'Commune'"
+                            :filterable="true" name="pdvCommune"></ComboBox>
+                    </template>
+                    <template v-slot:addr>
+                        <TextBox autocomplete="off" @keyup="validOnEnter" :placeholder="'Adresse'"></TextBox>
+                    </template>
+                </GridLayout>
+            </form>
         </CardBody>
     </Card>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import { GridLayout, Card, CardHeader, CardBody, CardTitle } from "@progress/kendo-vue-layout";
+import { TextBox } from "@progress/kendo-vue-inputs";
 import { ComboBox, MultiSelect } from '@progress/kendo-vue-dropdowns';
 
 const databases = [{ "id": "MGGOPTIMARK", "text": "OPTIMARK" }, { "id": "MGGRMA", "text": "RMA" }];
@@ -64,6 +105,14 @@ const pdvCommunes = [" ANDELYS", " BOURG EN BRESSE", " Challans", " LES PONTS DE
 const db = ref();
 const clientDenom = ref();
 const pdvCommune = ref();
+function submit(e) {
+    console.log(e, arguments)
+}
+function validOnEnter(e) {
+    if (e.key === "Enter") {
+        nextTick(submit)
+    }
+}
 </script>
 
 <style scoped>
